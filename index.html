@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchFilmes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>MatchFilmes</h1>
+        <a href="login.html" class="btn-header-login">Sair</a>
+    </header>
+
+    <main>
+        <section id="media-choice-section" class="choice-section">
+            <h2>O que você deseja assistir hoje?</h2>
+            <div class="button-group">
+                <button id="btn-filmes" class="choice-btn">Filmes</button>
+                <button id="btn-series" class="choice-btn">Série</button>
+            </div>
+        </section>
+
+        <section id="genre-choice-section" class="choice-section hidden">
+            <h2 id="genre-title">Qual gênero de filme você quer?</h2>
+            <div id="genre-grid" class="genre-grid">
+                </div>
+            <button id="btn-confirmar" class="btn-confirmar">Confirmar</button>
+        </section>
+
+        <section id="movie-card-section" class="hidden">
+            <div class="movie-card-container">
+                <div class="movie-card">
+                    <img id="movie-poster" src="" alt="Poster do Filme">
+                    <h3 id="movie-title">Nome do Filme</h3>
+                    <p id="movie-overview">Sinopse do filme...</p>
+                </div>
+
+                <div class="swipe-buttons">
+                    <button class="btn-option">❌ Nunca vi</button>
+                    <button class="btn-option">👍 Já vi e recomendo</button>
+                    <button class="btn-option">👎 Já vi e não recomendo</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

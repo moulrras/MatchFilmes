@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #141414;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 60px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+}
+
+.login-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #b3b3b3;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 16px;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.login-footer {
+    color: #b3b3b3;
+}
+
+.login-footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+/* No final do style-login.css */
+.error-text {
+    color: #e50914; /* Vermelho Netflix */
+    text-align: center;
+    font-size: 0.9em;
+    height: 15px; /* Deixa um espacinho reservado */
+}
