@@ -1,5 +1,6 @@
 // Espera o conteúdo da página carregar
 document.addEventListener("DOMContentLoaded", () => {
+    
     // Pega os elementos do HTML
     const registerForm = document.getElementById("register-form");
     const senhaInput = document.getElementById("senha");
@@ -15,17 +16,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const senha = senhaInput.value;
         const confirmarSenha = confirmarSenhaInput.value;
 
-        // 3. A LÓGICA QUE VOCÊ PEDIU:
+        // 3. A LÓGICA DE VALIDAÇÃO:
         if (senha !== confirmarSenha) {
             // Se as senhas forem diferentes, mostra o erro
             errorMessage.textContent = "Erro: As senhas não conferem!";
         } else {
             // Se estiverem corretas
             errorMessage.textContent = ""; // Limpa a mensagem de erro
+            
             alert("Conta criada com sucesso!"); // Dá um alerta de sucesso
             
-            // Aqui, no futuro, você enviaria os dados para um Banco de Dados
-            // Por enquanto, vamos só redirecionar para o login:
+            // NO FUTURO: Aqui você enviaria os dados para um Banco de Dados
+            
+            // Redireciona o usuário para a tela de login
             window.location.href = "login.html";
         }
     });

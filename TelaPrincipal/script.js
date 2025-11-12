@@ -1,11 +1,7 @@
 //
 // --- CONFIGURAÇÃO ---
 //
-// ❗️❗️ COLOQUE SUA CHAVE DE API (v3) DO TMDB AQUI ❗️❗️
-const API_KEY = 'SUA_CHAVE_DE_API_VAI_AQUI'; 
-// ❗️❗️ COLOQUE SUA CHAVE DE API (v3) DO TMDB AQUI ❗️❗️
-//
-
+const API_KEY = '7cd535c04b5dcf44909c426dde912ece'; 
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 //
@@ -29,8 +25,8 @@ const swipeButtons = document.querySelector('.swipe-buttons');
 //
 // --- VARIÁVEIS DE ESTADO ---
 //
-let mediaType = 'movie'; // 'movie' (filme) ou 'tv' (série)
-let selectedGenres = []; // Array para guardar os IDs dos gêneros
+let mediaType = 'movie'; 
+let selectedGenres = []; 
 
 //
 // --- ETAPA 1: LÓGICA DE ESCOLHA DE MÍDIA ---
@@ -48,8 +44,8 @@ btnSeries.addEventListener('click', () => {
 });
 
 function showGenreSelector() {
-    mediaChoiceSection.classList.add('hidden'); // Esconde "Filme ou Série?"
-    genreChoiceSection.classList.remove('hidden'); // Mostra "Gêneros"
+    mediaChoiceSection.classList.add('hidden'); 
+    genreChoiceSection.classList.remove('hidden'); 
     fetchGenres();
 }
 
@@ -57,35 +53,31 @@ function showGenreSelector() {
 // --- ETAPA 2: BUSCAR E MOSTRAR GÊNEROS ---
 //
 async function fetchGenres() {
-    // Limpa gêneros antigos
     genreGrid.innerHTML = 'Carregando gêneros...';
-    
-    // Constrói a URL da API para buscar a LISTA DE GÊNEROS
     const url = `${BASE_URL}/genre/${mediaType}/list?api_key=${API_KEY}&language=pt-BR`;
 
     try {
         const response = await fetch(url);
+        if (!response.ok) {
+             throw new Error(`Falha na API: ${response.statusText}`);
+        }
         const data = await response.json();
         
-        // Limpa o 'Carregando...'
         genreGrid.innerHTML = '';
         
-        // Cria os botões de gênero
         data.genres.forEach(genre => {
             const tag = document.createElement('div');
             tag.classList.add('genre-tag');
             tag.textContent = genre.name;
-            tag.dataset.id = genre.id; // Guarda o ID do gênero no botão
+            tag.dataset.id = genre.id; 
             
-            // Lógica para selecionar/desselecionar
             tag.addEventListener('click', () => {
-                tag.classList.toggle('selected'); // Adiciona/remove a classe 'selected'
+                tag.classList.toggle('selected'); 
                 
                 const genreId = parseInt(tag.dataset.id);
                 if (tag.classList.contains('selected')) {
-                    selectedGenres.push(genreId); // Adiciona na lista
+                    selectedGenres.push(genreId); 
                 } else {
-                    // Remove da lista
                     selectedGenres = selectedGenres.filter(id => id !== genreId);
                 }
             });
@@ -95,7 +87,7 @@ async function fetchGenres() {
 
     } catch (error) {
         console.error("Erro ao buscar gêneros:", error);
-        genreGrid.innerHTML = 'Erro ao carregar gêneros. Tente novamente.';
+        genreGrid.innerHTML = 'Erro ao carregar gêneros. Verifique sua chave de API (API_KEY) e a conexão.';
     }
 }
 
@@ -112,59 +104,103 @@ btnConfirmar.addEventListener('click', () => {
 });
 
 async function fetchRecommendation() {
-    genreChoiceSection.classList.add('hidden'); // Esconde "Gêneros"
-    movieCardSection.classList.remove('hidden'); // Mostra o "Card do Filme"
+    genreChoiceSection.classList.add('hidden'); 
+    movieCardSection.classList.remove('hidden'); 
     
-    // Prepara os gêneros para a URL (ex: "28,12,16")
-    const genresString = selectedGenres.join(',');
+    const genresString = selectedGenres.join('|'); // Busca por "OU"
 
-    // Constrói a URL da API para DESCOBRIR filmes/séries
-    const url = `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=pt-BR&sort_by=vote_average.desc&vote_count.gte=500&with_genres=${genresString}`;
-    // sort_by=vote_average.desc -> Pega os mais bem avaliados (como vc pediu)
-    // vote_count.gte=500 -> Que tenham pelo menos 500 votos (para não pegar filme obscuro)
-    // with_genres=... -> Com os gêneros que você escolheu
+    //
+    // --- CORREÇÃO 1: FIM DA REPETIÇÃO ---
+    // Pedimos uma página aleatória entre 1 e 50 (total de 1000 filmes)
+    //
+    const randomPage = Math.floor(Math.random() * 50) + 1;
 
+    const url = `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=pt-BR&sort_by=popularity.desc&vote_count.gte=500&with_genres=${genresString}&page=${randomPage}`;
+    
     try {
         const response = await fetch(url);
+        if (!response.ok) {
+             throw new Error(`Falha na API: ${response.statusText}`);
+        }
         const data = await response.json();
         
-        // Pega um filme aleatório da lista de resultados
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        const recommendation = data.results[randomIndex];
+        if (data.results && data.results.length > 0) {
+            const randomIndex = Math.floor(Math.random() * data.results.length);
+            const recommendation = data.results[randomIndex];
 
-        displayMovie(recommendation);
+            displayMovie(recommendation);
+        } else {
+            // Se a página aleatória vier vazia, busca outra
+            fetchRecommendation();
+        }
 
     } catch (error) {
         console.error("Erro ao buscar recomendação:", error);
+        movieTitle.textContent = "Erro ao buscar filme.";
+        movieOverview.textContent = "Tente novamente.";
     }
 }
+
 
 //
 // --- ETAPA 4: MOSTRAR O FILME/SÉRIE NO CARD ---
 //
 function displayMovie(item) {
-    // TMDB usa 'title' para filmes e 'name' para séries
     movieTitle.textContent = item.title || item.name; 
     movieOverview.textContent = item.overview;
-    
-    // Monta a URL completa do poster
     moviePoster.src = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
 
-    // Limpa e adiciona os botões de ação novamente (para o próximo filme)
     swipeButtons.innerHTML = `
         <button class="btn-option" data-action="never_seen">❌ Nunca vi</button>
         <button class="btn-option" data-action="recommend">👍 Já vi e recomendo</button>
         <button class="btn-option" data-action="not_recommend">👎 Já vi e não recomendo</button>
     `;
     
-    // Adiciona lógica aos botões (que por enquanto só buscam outro filme)
     document.querySelectorAll('.btn-option').forEach(button => {
         button.addEventListener('click', (e) => {
             const action = e.target.dataset.action;
-            console.log(`Ação do usuário: ${action}`); // No futuro, vc salva isso no DB
             
-            // Busca a próxima recomendação
+            //
+            // --- NOVO RECURSO 2: SALVAR NA "MINHA LISTA" ---
+            //
+            // Apenas salvamos se o usuário recomendou ou não
+            if(action === 'recommend' || action === 'not_recommend') {
+                saveToMyList(item, action);
+            }
+            
+            // Carrega o próximo filme (Swipe Contínuo)
             fetchRecommendation();
         });
     });
+}
+
+//
+// --- NOVO RECURSO 3: FUNÇÃO PARA SALVAR NO LOCALSTORAGE ---
+//
+function saveToMyList(item, action) {
+    // 1. Pega a lista atual do 'banco de dados' do navegador
+    let myList = JSON.parse(localStorage.getItem('myMovieList')) || [];
+
+    // 2. Verifica se o filme já está na lista
+    const existingMovieIndex = myList.findIndex(m => m.id === item.id);
+
+    if (existingMovieIndex > -1) {
+        // Se já existe, apenas atualiza o status (ex: de 'não recomendo' para 'recomendo')
+        myList[existingMovieIndex].status = action;
+    } else {
+        // Se não existe, cria um novo objeto de filme para salvar
+        const movieData = {
+            id: item.id,
+            title: item.title || item.name,
+            poster_path: item.poster_path,
+            status: action,
+            rating: null, // O usuário vai avaliar depois
+            comment: ""   // O usuário vai avaliar depois
+        };
+        myList.push(movieData);
+    }
+
+    // 3. Salva a lista atualizada de volta no 'banco de dados'
+    localStorage.setItem('myMovieList', JSON.stringify(myList));
+    console.log(`Filme salvo: ${item.title || item.name}, Status: ${action}`);
 }

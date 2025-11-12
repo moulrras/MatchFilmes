@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatchFilmes - Criar Conta</title>
+    <title>MatchFilmes - Login</title>
     <link rel="stylesheet" href="style-login.css">
 </head>
 <body>
     <div class="login-container">
-        <form id="register-form">
-            <h1>Criar Conta</h1>
+        <form id="login-form">
+            <h1>Login</h1>
             
             <div class="input-group">
                 <label for="usuario">Usuário</label>
@@ -20,22 +20,13 @@
                 <label for="senha">Senha</label>
                 <input type="password" id="senha" name="senha" required>
             </div>
-
-            <div class="input-group">
-                <label for="confirmarSenha">Confirmar Senha</label>
-                <input type="password" id="confirmarSenha" name="confirmarSenha" required>
-            </div>
             
-            <p id="error-message" class="error-text"></p>
-
-            <button type="submit" class="btn-login">Criar Conta</button>
+            <button type="submit" class_name="btn-login">Entrar</button>
             
             <div class="login-footer">
-                <p>Já tem uma conta? <a href="login.html">Faça login</a>.</p>
+                <p>Ainda não tem uma conta? <a href="../Cadastro/register.html">Crie agora</a>.</p>
             </div>
         </form>
     </div>
-
-    <script src="register.js"></script>
-</body>
+    </body>
 </html>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatchFilmes - Login</title>
-    <link rel="stylesheet" href="style-login.css">
+    <title>MatchFilmes - Criar Conta</title>
+    <link rel="stylesheet" href="../TelaLogin/style-login.css">
 </head>
 <body>
     <div class="login-container">
-        <form id="login-form">
-            <h1>Login</h1>
+        <form id="register-form">
+            <h1>Criar Conta</h1>
             
             <div class="input-group">
                 <label for="usuario">Usuário</label>
@@ -20,13 +20,22 @@
                 <label for="senha">Senha</label>
                 <input type="password" id="senha" name="senha" required>
             </div>
+
+            <div class="input-group">
+                <label for="confirmarSenha">Confirmar Senha</label>
+                <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+            </div>
             
-            <button type="submit" class="btn-login">Entrar</button>
+            <p id="error-message" class="error-text"></p>
+
+            <button type="submit" class="btn-login">Criar Conta</button>
             
             <div class="login-footer">
-                <p>Ainda não tem uma conta? <a href="register.html">Crie agora</a>.</p>
+                <p>Já tem uma conta? <a href="../TelaLogin/login.html">Faça login</a>.</p>
             </div>
         </form>
     </div>
-    </body>
+
+    <script src="register.js"></script>
+</body>
 </html>

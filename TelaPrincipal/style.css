@@ -1,3 +1,4 @@
+/* Reset básico e estilo geral */
 body {
     font-family: Arial, sans-serif;
     background-color: #141414;
@@ -5,22 +6,21 @@ body {
     margin: 0;
 }
 
-/* --- ESTA É A PARTE IMPORTANTE --- */
+/* Cabeçalho */
 header {
     display: flex;
-    justify-content: space-between; /* Isso joga o Título para a esquerda e o Login para a direita */
-    align-items: center; /* Isso alinha eles verticalmente */
-    padding: 20px 50px; /* 20px em cima/baixo, 50px nas laterais */
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
     background-color: #111;
 }
 
 header h1 {
-    color: #e50914; /* Vermelho Netflix */
+    color: #e50914;
     font-size: 2em;
     margin: 0;
 }
 
-/* Estilo do botão de Login no header */
 .btn-header-login {
     background-color: #e50914;
     color: #fff;
@@ -31,33 +31,9 @@ header h1 {
     font-size: 0.9em;
 }
 
-.btn-header-login:hover {
-    background-color: #f6121d;
-}
-/* --- Fim da parte importante --- */
-
-
-/* Estilos da "prateleira" de filmes (do exemplo anterior) */
 main {
     padding: 20px 50px;
 }
-
-.movie-shelf h2 {
-    font-size: 1.8em;
-    margin-bottom: 15px;
-}
-
-.shelf-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-}
-
-.shelf-item img {
-    width: 100%;
-    border-radius: 5px;
-}
-/* Adicione isso ao seu 'style.css' existente */
 
 /* Classe para esconder seções */
 .hidden {
@@ -116,7 +92,6 @@ main {
     background-color: #555;
 }
 
-/* Estilo do gênero selecionado (será ativado via JS) */
 .genre-tag.selected {
     background-color: #e50914;
     border-color: #e50914;
@@ -164,7 +139,7 @@ main {
 /* As 3 novas opções */
 .swipe-buttons {
     display: flex;
-    flex-direction: column; /* Empilha os botões */
+    flex-direction: column;
     gap: 10px;
     padding: 15px;
 }
@@ -182,8 +157,140 @@ main {
 .swipe-buttons .btn-option:hover {
     background-color: #555;
 }
+/* --- Adicione isso ao final do seu style.css --- */
 
-/* Remove a prateleira antiga (opcional) */
-.movie-shelf {
-    display: none;
+/* Estilo do novo link "Minha Lista" */
+header {
+    /* Atualiza o header para organizar os botões à direita */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-header-nav {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+.btn-header-nav:hover {
+    color: #ccc;
+}
+
+/* Estilos da Prateleira (para mylist.html) */
+.shelf-container {
+    padding: 20px 50px;
+}
+.shelf-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+.shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+.shelf-item img {
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.shelf-item img:hover {
+    transform: scale(1.05);
+}
+
+/* Estilos do Modal de Avaliação */
+.modal-container {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-container.visible {
+    display: flex; /* Mostra o modal */
+}
+
+.modal-content {
+    background-color: #222;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    border: 1px solid #444;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modal-close:hover {
+    color: #fff;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+}
+.modal-poster img {
+    width: 150px;
+    border-radius: 5px;
+}
+.modal-details h3 {
+    margin-top: 0;
+    font-size: 1.8em;
+}
+
+/* Estrelas de Avaliação */
+.rating-stars {
+    font-size: 2em;
+    color: #555;
+    cursor: pointer;
+}
+.rating-stars .star:hover,
+.rating-stars .star.selected {
+    color: #e50914;
+}
+
+.modal-comment {
+    margin-top: 15px;
+}
+.modal-comment textarea {
+    width: 95%;
+    height: 80px;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.modal-footer {
+    text-align: right;
+    margin-top: 20px;
+}
+.modal-footer .btn-save {
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
 }
